@@ -1,0 +1,62 @@
+#include <iostream>
+
+using namespace std;
+
+// Circular linked list node structure
+struct Node {
+    int data;
+    Node* next;
+
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+class CircularLinkedList {
+private:
+    Node* head;
+
+public:
+    CircularLinkedList() : head(nullptr) {}
+
+    // Method to add a new node to the list
+    void insert(int val) {
+        Node* newNode = new Node(val);
+        if (head == nullptr) {
+            head = newNode;
+            head->next = head; // Pointing back to itself for circular nature
+        } else {
+            Node* temp = head;
+            while (temp->next != head) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+            newNode->next = head;
+        }
+    }
+
+    // Method to display the elements of the list
+    void display() {
+        if (head == nullptr) {
+            cout << "List is empty" << endl;
+            return;
+        }
+
+        Node* current = head;
+        do {
+            cout << current->data << " ";
+            current = current->next;
+        } while (current != head);
+        cout << endl;
+    }
+};
+
+int main() {
+    CircularLinkedList cll;
+
+    cll.insert(1);
+    cll.insert(2);
+    cll.insert(3);
+
+    cll.display();
+
+    return 0;
+}
